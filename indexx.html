@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Merry Christmas 🎄</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background:
+        radial-gradient(
+          circle at top,
+          #2b4f3a 0%,
+          #1f3d2b 45%,
+          #14251d 100%
+        );
+      font-family: system-ui, sans-serif;
+    }
+
+    /* vignette */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(
+        circle,
+        transparent 45%,
+        rgba(0,0,0,0.45) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* snow */
+    .snow {
+      position: fixed;
+      top: -10px;
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.9;
+      filter: drop-shadow(0 0 4px rgba(255,255,255,0.8));
+      animation: fall linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+      }
+    }
+
+    /* glow behind card */
+    .glow {
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(
+        circle,
+        rgba(255,255,255,0.35),
+        rgba(255,255,255,0)
+      );
+      filter: blur(50px);
+      z-index: 0;
+    }
+
+    /* card frame */
+    .card {
+      position: relative;
+      padding: 24px 24px 0 24px;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.12);
+      border: 2px solid rgba(255,255,255,0.35);
+      backdrop-filter: blur(8px);
+      box-shadow:
+        0 0 50px rgba(255,255,255,0.3),
+        inset 0 0 25px rgba(255,255,255,0.15);
+      z-index: 1;
+    }
+
+    #character {
+      width: 220px;
+      display: block;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.15s ease;
+    }
+
+    #character:active {
+      transform: scale(1.06) rotate(-1deg);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow"></div>
+
+  <div class="card">
+    <img id="character" src="osakasan.png" alt="Christmas Character" />
+  </div>
+
+  <audio id="sound" src="merry_christmas.mp3" preload="auto"></audio>
+
+  <script>
+    const character = document.getElementById("character");
+    const sound = document.getElementById("sound");
+
+    character.addEventListener("click", () => {
+      sound.currentTime = 0;
+      sound.playbackRate = 0.95 + Math.random() * 0.1;
+      sound.play();
+    });
+
+    // create snow
+    for (let i = 0; i < 28; i++) {
+      const snow = document.createElement("div");
+      snow.className = "snow";
+      snow.style.left = Math.random() * 100 + "vw";
+      snow.style.animationDuration = 6 + Math.random() * 6 + "s";
+      snow.style.opacity = 0.6 + Math.random() * 0.4;
+      snow.style.transform = `scale(${0.6 + Math.random()})`;
+      document.body.appendChild(snow);
+    }
+  </script>
+
+</body>
+</html>
